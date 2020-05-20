@@ -20,6 +20,7 @@ parser.add_argument('--train_file')
 parser.add_argument('--dev_file')
 parser.add_argument('--test_file')
 parser.add_argument('--batch_size')
+parser.add_argument('--max_epoch')
 
 args = parser.parse_args()
 
@@ -29,6 +30,7 @@ gene_expression_file_train = args.train_file
 gene_expression_file_dev = args.dev_file
 gene_expression_file_test = args.test_file
 batch_size = int(args.batch_size)
+max_epoch = int(args.max_epoch)
 
 # parameters initialization
 drug_input_dim = {'atom': 62, 'bond': 6}
@@ -41,16 +43,11 @@ pert_type_emb_dim = 4
 cell_id_emb_dim = 4
 pert_idose_emb_dim = 4
 hid_dim = 128
-# dropout = 0.5
 num_gene = 978
-num_epoch = 1
 precision_degree = [10, 20, 50, 100]
 loss_type = 'point_wise_mse'
 intitializer = torch.nn.init.xavier_uniform_
 gene_file = 'data/gene_vector.csv'
-# gene_expression_file_train = 'data/signature_train.csv'
-# gene_expression_file_dev = 'data/signature_dev.csv'
-# gene_expression_file_test = 'data/signature_test.csv'
 filter = {"time": "24H", "pert_id": ['BRD-U41416256', 'BRD-U60236422'], "pert_type": ["trt_cp"],
           "cell_id": ['A375', 'HA1E', 'HELA', 'HT29', 'MCF7', 'PC3', 'YAPC'],
           "pert_idose": ["0.04 um", "0.12 um", "0.37 um", "1.11 um", "3.33 um", "10.0 um"]}
@@ -203,9 +200,8 @@ for epoch in range(num_epoch):
         rmse = metric.rmse(lb_np, predict_np)
         rmse_list_test.append(rmse)
         print('RMSE: %.4f' % rmse)
-        pearson, pearson_raw = metric.correlation(lb_np, predict_np, 'pearson')
+        pearson, _ = metric.correlation(lb_np, predict_np, 'pearson')
         pearson_list_test.append(pearson)
-        pearson_raw_list.append(pearson_raw)
         print('Pearson\'s correlation: %.4f' % pearson)
         spearman, _ = metric.correlation(lb_np, predict_np, 'spearman')
         spearman_list_test.append(spearman)
@@ -240,6 +236,5 @@ print("Epoch %d got RMSE on test set: %.4f" % (best_test_epoch + 1, rmse_list_te
 print("Epoch %d got P@100 POS and NEG on test set: %.4f, %.4f" % (best_test_epoch + 1,
                                                                   precisionk_list_test[best_test_epoch][-1][0],
                                                                   precisionk_list_test[best_test_epoch][-1][1]))
-print(','.join([str(i) for i in pearson_raw_list[best_dev_epoch]]))
 end_time = datetime.now()
 print(end_time - start_time)
