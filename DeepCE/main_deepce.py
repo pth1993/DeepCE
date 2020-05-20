@@ -15,6 +15,7 @@ start_time = datetime.now()
 
 parser = argparse.ArgumentParser(description='DeepCE Training')
 parser.add_argument('--drug_file')
+parser.add_argument('--gene_file')
 parser.add_argument('--dropout')
 parser.add_argument('--train_file')
 parser.add_argument('--dev_file')
@@ -25,6 +26,7 @@ parser.add_argument('--max_epoch')
 args = parser.parse_args()
 
 drug_file = args.drug_file
+gene_file = args.gene_file
 dropout = float(args.dropout)
 gene_expression_file_train = args.train_file
 gene_expression_file_dev = args.dev_file
@@ -47,7 +49,6 @@ num_gene = 978
 precision_degree = [10, 20, 50, 100]
 loss_type = 'point_wise_mse'
 intitializer = torch.nn.init.xavier_uniform_
-gene_file = 'data/gene_vector.csv'
 filter = {"time": "24H", "pert_id": ['BRD-U41416256', 'BRD-U60236422'], "pert_type": ["trt_cp"],
           "cell_id": ['A375', 'HA1E', 'HELA', 'HT29', 'MCF7', 'PC3', 'YAPC'],
           "pert_idose": ["0.04 um", "0.12 um", "0.37 um", "1.11 um", "3.33 um", "10.0 um"]}
@@ -92,7 +93,7 @@ rmse_list_test = []
 precisionk_list_dev = []
 precisionk_list_test = []
 pearson_raw_list = []
-for epoch in range(num_epoch):
+for epoch in range(max_epoch):
     print("Iteration %d:" % (epoch+1))
     model.train()
     epoch_loss = 0
