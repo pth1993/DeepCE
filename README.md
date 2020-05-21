@@ -9,7 +9,7 @@ and outputs to predict gene expression profiles given a chemical compound.
 
 **DeepCE** achieves state-of-the-art results of predicting gene expression profiles compared to other models not only 
 in *de novo* chemical setting but also in the traditional imputation setting. More importantly, **DeepCE** is shown to be 
-effective in the challenge and urgent problem, finding treatment for COVID-19. In summary, **DeepCE** could be a powerful 
+effective in the challenge and urgent problem, finding treatment for **COVID-19**. In summary, **DeepCE** could be a powerful 
 tool for phenotype-based compound screening. 
 
 ## 2. Installation
