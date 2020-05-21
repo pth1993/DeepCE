@@ -58,9 +58,9 @@ Arguments in this scripts:
 * ``--batch_size``:       batch size value for each training step
 * ``--max_epoch``:     maximum number of training iterations
 
-### 4.3. Getting chemical-induced gene expression profiles for all drug in Drugbank
+### 4.3. Getting chemical-induced gene expression profiles for all drugs in Drugbank
 
-Beside **DeepCE** source code, we also publicize the chemical-induced gene expression profiles generated from **DeepCE** at 8 
+Besides **DeepCE** source code, we also publicize the chemical-induced gene expression profiles generated from **DeepCE** at 8 
 cell lines including *A375*, *A549*, *HA1E*, *HELA*, *HT29*, *MCF7*, *PC3*, and *YAPC* for all drugs (i.e. 11179 drugs) 
 in Drugbank. We hope that this dataset could make significant a contribution to drug discovery and development in 
 particular, and computational chemistry and biology research in general.
