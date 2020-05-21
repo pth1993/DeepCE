@@ -14,16 +14,13 @@ tool for phenotype-based compound screening.
 
 ## 2. Pipeline
 
-<figure>
-    <img src="https://raw.githubusercontent.com/pth1993/DeepCE/master/docs/fig1.png" width="500">
-    <figcaption>Figure 1: General framework of training DeepCE for L1000 gene expression profile 
-    prediction and using it for downstream application (i.e. drug repurposing). The objective for the learning 
-    process is minimizing the loss between predicted profiles and grouth-truth profiles in L1000 dataset. After 
-    training, DeepCE is used for generating profiles for new chemicals in external molecular database (e.g. DrugBank, 
-    ChEMBL). These profiles are then used for in silico screening to find potential drugs for disease 
-    treatment</figcaption>
-</figure>
-<p>
+![alt text](docs/fig1.png "Pipeline")
+
+Figure 1: General framework of training DeepCE for L1000 gene expression profile prediction and using it for 
+downstream application (i.e. drug repurposing). The objective for the learning process is minimizing the loss 
+between predicted profiles and grouth-truth profiles in L1000 dataset. After training, DeepCE is used for 
+generating profiles for new chemicals in external molecular database (e.g. DrugBank, ChEMBL). These profiles 
+are then used for in silico screening to find potential drugs for disease treatment
 
 ## 3. Installation
 
