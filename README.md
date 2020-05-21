@@ -68,4 +68,4 @@ The downloaded dataset will be located at folder ``DeepCE/data/drugbank_gene_exp
 
 **Thai-Hoang Pham** < pham.375@osu.edu >
 
-Department of Computer Science and Engineering, Ohio State University, US
+Department of Computer Science and Engineering, Ohio State University, USA
