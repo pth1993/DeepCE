@@ -14,7 +14,7 @@ tool for phenotype-based compound screening.
 
 ## 2. Pipeline
 
-![alt text](docs/fig0.png "Pipeline")
+![alt text](docs/fig1.png "Pipeline")
 
 Figure 1: General framework of training **DeepCE** for L1000 gene expression profile prediction and using it for 
 downstream application (i.e. drug repurposing). The objective for the learning process is minimizing the loss 
