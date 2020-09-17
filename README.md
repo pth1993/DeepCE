@@ -91,6 +91,13 @@ located at folder ``script/`` as follows:
     $ bash covid_drug_repurposing.sh
 ```
 
+Arguments in this scripts:
+
+* ``--data_dir``:       path for COVID-19 data folder
+* ``--patient_file``:         COVID-19 patient gene expression file name
+* ``--num_cell``:        minimum number of cell lines that drugs appear on top ranked list
+* ``--top``:        size of top drugs in ranked list for each cell line
+
 ## 6. Contact
 
 **Thai-Hoang Pham** < pham.375@osu.edu >
