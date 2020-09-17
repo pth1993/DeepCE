@@ -1,4 +1,5 @@
 # DeepCE - A novel and robust deep learning framework for high-throughput mechanism-driven phenotype compound screening
+and its application to COVID-19 drug repurposing
 -----------------------------------------------------------------
 Code by **Thai-Hoang Pham** at Ohio State University.
 
