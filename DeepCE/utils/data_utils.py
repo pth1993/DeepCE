@@ -1,7 +1,7 @@
 import numpy as np
 import random
 import torch
-from molecules import Molecules
+from .molecules import Molecules
 
 
 def read_drug_number(input_file, num_feature):
@@ -116,15 +116,9 @@ def transfrom_to_tensor(feature_train, label_train, feature_dev, label_dev, feat
     train_drug_feature = []
     dev_drug_feature = []
     test_drug_feature = []
-    train_drug_target_feature = []
-    dev_drug_target_feature = []
-    test_drug_target_feature = []
     pert_type_set = sorted(list(set(feature_train[:, 1])))
     cell_id_set = sorted(list(set(feature_train[:, 2])))
     pert_idose_set = sorted(list(set(feature_train[:, 3])))
-    # pert_type_set = ['trt_cp']
-    # cell_id_set = ['HA1E', 'HT29', 'MCF7', 'YAPC', 'HELA', 'PC3', 'A375']
-    # pert_idose_set = ['1.11 um', '0.37 um', '10.0 um', '0.04 um', '3.33 um', '0.12 um']
     use_pert_type = False
     use_cell_id = False
     use_pert_idose = False
@@ -222,12 +216,3 @@ def transfrom_to_tensor(feature_train, label_train, feature_dev, label_dev, feat
     test_label_regression = torch.from_numpy(label_test).to(device)
     return train_feature, dev_feature, test_feature, train_label_regression, dev_label_regression, \
            test_label_regression, use_pert_type, use_cell_id, use_pert_idose
-
-
-if __name__ == '__main__':
-    filter = {"time": "24H", "pert_id": ['BRD-U41416256', 'BRD-U60236422'], "pert_type": ["trt_cp"],
-              "cell_id": ['A375', 'HA1E', 'HELA', 'HT29', 'MCF7', 'PC3', 'YAPC'],
-              "pert_idose": ["0.04 um", "0.12 um", "0.37 um", "1.11 um", "3.33 um", "10.0 um"]}
-    ft, lb = read_data('../data/signature_train.csv', filter)
-    print(np.shape(ft))
-    print(np.shape(lb))

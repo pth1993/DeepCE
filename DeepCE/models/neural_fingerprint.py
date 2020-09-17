@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from graph_degree_conv import GraphDegreeConv
+from .graph_degree_conv import GraphDegreeConv
 
 
 class NeuralFingerprint(nn.Module):

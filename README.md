@@ -22,7 +22,13 @@ between predicted profiles and grouth-truth profiles in L1000 dataset. After tra
 generating profiles for new chemicals in external molecular database (e.g. DrugBank, ChEMBL). These profiles 
 are then used for **in silico** screening to find potential drugs for disease treatment
 
-## 3. Installation
+## 3. DeepCE
+
+![alt text](docs/fig2.png "DeepCE")
+
+Figure 2: Overall architecture of **DeepCE**
+
+## 4. Installation
 
 **DeepCE** depends on Numpy, SciPy, PyTorch (CUDA toolkit if use GPU), scikit-learn, and RDKit. 
 You must have them installed before using **DeepCE**.
@@ -32,13 +38,13 @@ The simple way to install them is using conda:
 ```sh
 	$ conda install numpy scipy scikit-learn rdkit pytorch
 ```
-## 4. Usage
+## 5. Usage
 
-### 4.1. Data
+### 5.1. Data
 
 The datasets used to train **DeepCE** are located at folder ``DeepCE/data/``
 
-### 4.2. Training DeepCE
+### 5.2. Training DeepCE
 
 The training script for **DeepCE** is located at folder ``script/``
 
@@ -58,23 +64,34 @@ Arguments in this scripts:
 * ``--batch_size``:       batch size value for each training step
 * ``--max_epoch``:     maximum number of training iterations
 
-### 4.3. Getting chemical-induced gene expression profiles for all drugs in Drugbank
+### 5.3. COVID-19 drug repurposing by scanning all drugs in Drugbank
 
-Besides **DeepCE** source code, we also publicize the chemical-induced gene expression profiles generated from **DeepCE** at 8 
-cell lines including *A375*, *A549*, *HA1E*, *HELA*, *HT29*, *MCF7*, *PC3*, and *YAPC* for all drugs (i.e. 11179 drugs) 
-in Drugbank. We hope that this dataset could make significant a contribution to drug discovery and development in 
-particular, and computational chemistry and biology research in general.
+Besides **DeepCE** source code, we also publicize the chemical-induced gene expression profiles generated from 
+**DeepCE** at 8 cell lines including *A375*, *A549*, *HA1E*, *HELA*, *HT29*, *MCF7*, *PC3*, and *YAPC* for all drugs 
+(i.e. 11179 drugs) in Drugbank and COVID-19 patients' gene expression profiles. Drug repurposing for COVID-19 can be 
+conducted by comparing chemical-induced gene expression profiles with COVID-19 patients' gene expression profiles. 
+We hope that this dataset could make significant a contribution to drug discovery and development in particular, 
+and computational chemistry and biology research in general.
 
-The script for getting these chemical-induced gene expression profiles is located at folder ``script/``
+The script for getting these chemical-induced gene expression profiles and COVID-19 patients' gene expressions is 
+located at folder ``script/``
 
 ```sh
     $ cd script
     $ bash get_gene_expression_data.sh
 ```
 
-The downloaded dataset will be located at folder ``DeepCE/data/drugbank_gene_expression/``
+The downloaded dataset will be located at folder ``DeepCE/data/covid_data/``
 
-## 5. Contact
+After downloading this dataset, users can generate potential drugs for COVID-19 by running the scripts which are 
+located at folder ``script/`` as follows:
+
+```sh
+    $ cd script
+    $ bash covid_drug_repurposing.sh
+```
+
+## 6. Contact
 
 **Thai-Hoang Pham** < pham.375@osu.edu >
 

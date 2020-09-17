@@ -5,11 +5,11 @@ from datetime import datetime
 import torch
 import numpy as np
 import argparse
-sys.path.append(os.path.dirname(os.path.realpath(__file__)) + '/models')
-sys.path.append(os.path.dirname(os.path.realpath(__file__)) + '/utils')
-import deepce
-import datareader
-import metric
+# sys.path.append(os.path.dirname(os.path.realpath(__file__)) + '/models')
+# sys.path.append(os.path.dirname(os.path.realpath(__file__)) + '/utils')
+from models import DeepCE
+from utils import DataReader
+from utils import rmse, correlation, precision_k
 
 start_time = datetime.now()
 
@@ -60,15 +60,15 @@ else:
     device = torch.device("cpu")
 print("Use GPU: %s" % torch.cuda.is_available())
 
-data = datareader.DataReader(drug_file, gene_file, gene_expression_file_train, gene_expression_file_dev,
-                             gene_expression_file_test, filter, device)
+data = DataReader(drug_file, gene_file, gene_expression_file_train, gene_expression_file_dev,
+                  gene_expression_file_test, filter, device)
 print('#Train: %d' % len(data.train_feature['drug']))
 print('#Dev: %d' % len(data.dev_feature['drug']))
 print('#Test: %d' % len(data.test_feature['drug']))
 
 
 # model creation
-model = deepce.DeepCE(drug_input_dim=drug_input_dim, drug_emb_dim=drug_embed_dim,
+model = DeepCE(drug_input_dim=drug_input_dim, drug_emb_dim=drug_embed_dim,
                       conv_size=conv_size, degree=degree, gene_input_dim=np.shape(data.gene)[1],
                       gene_emb_dim=gene_embed_dim, num_gene=np.shape(data.gene)[0], hid_dim=hid_dim, dropout=dropout,
                       loss_type=loss_type, device=device, initializer=intitializer,
@@ -151,18 +151,18 @@ for epoch in range(max_epoch):
             predict_np = np.concatenate((predict_np, predict.cpu().numpy()), axis=0)
         print('Dev loss:')
         print(epoch_loss / (i + 1))
-        rmse = metric.rmse(lb_np, predict_np)
-        rmse_list_dev.append(rmse)
-        print('RMSE: %.4f' % rmse)
-        pearson, _ = metric.correlation(lb_np, predict_np, 'pearson')
+        rmse_score = rmse(lb_np, predict_np)
+        rmse_list_dev.append(rmse_score)
+        print('RMSE: %.4f' % rmse_score)
+        pearson, _ = correlation(lb_np, predict_np, 'pearson')
         pearson_list_dev.append(pearson)
         print('Pearson\'s correlation: %.4f' % pearson)
-        spearman, _ = metric.correlation(lb_np, predict_np, 'spearman')
+        spearman, _ = correlation(lb_np, predict_np, 'spearman')
         spearman_list_dev.append(spearman)
         print('Spearman\'s correlation: %.4f' % spearman)
         precision = []
         for k in precision_degree:
-            precision_neg, precision_pos = metric.precision_k(lb_np, predict_np, k)
+            precision_neg, precision_pos = precision_k(lb_np, predict_np, k)
             print("Precision@%d Positive: %.4f" % (k, precision_pos))
             print("Precision@%d Negative: %.4f" % (k, precision_neg))
             precision.append([precision_pos, precision_neg])
@@ -198,18 +198,18 @@ for epoch in range(max_epoch):
             predict_np = np.concatenate((predict_np, predict.cpu().numpy()), axis=0)
         print('Test loss:')
         print(epoch_loss / (i + 1))
-        rmse = metric.rmse(lb_np, predict_np)
-        rmse_list_test.append(rmse)
-        print('RMSE: %.4f' % rmse)
-        pearson, _ = metric.correlation(lb_np, predict_np, 'pearson')
+        rmse_score = rmse(lb_np, predict_np)
+        rmse_list_test.append(rmse_score)
+        print('RMSE: %.4f' % rmse_score)
+        pearson, _ = correlation(lb_np, predict_np, 'pearson')
         pearson_list_test.append(pearson)
         print('Pearson\'s correlation: %.4f' % pearson)
-        spearman, _ = metric.correlation(lb_np, predict_np, 'spearman')
+        spearman, _ = correlation(lb_np, predict_np, 'spearman')
         spearman_list_test.append(spearman)
         print('Spearman\'s correlation: %.4f' % spearman)
         precision = []
         for k in precision_degree:
-            precision_neg, precision_pos = metric.precision_k(lb_np, predict_np, k)
+            precision_neg, precision_pos = precision_k(lb_np, predict_np, k)
             print("Precision@%d Positive: %.4f" % (k, precision_pos))
             print("Precision@%d Negative: %.4f" % (k, precision_neg))
             precision.append([precision_pos, precision_neg])

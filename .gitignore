@@ -11,4 +11,6 @@ __pycache__/*
 *.bmp
 *.html
 *.pt
+*.zip
 DeepCE/output/*
+DeepCE/data/covid_data/*

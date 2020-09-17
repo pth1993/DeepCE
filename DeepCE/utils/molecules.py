@@ -1,5 +1,5 @@
 import rdkit
-import molecule_utils
+from .molecule_utils import atom_features, bond_features
 from collections import Iterable
 
 
@@ -94,13 +94,13 @@ class Molecule(object):
         if not mol:
             raise ValueError("Could not parse SMILES string:", smiles)
         for atom in mol.GetAtoms():
-            atom_node = Node('atom', node_id(smiles, atom.GetIdx()), molecule_utils.atom_features(atom))
+            atom_node = Node('atom', node_id(smiles, atom.GetIdx()), atom_features(atom))
             self.atom_dict[node_id(smiles, atom.GetIdx())] = atom_node
             self.atom_list.append(atom_node)
         for bond in mol.GetBonds():
             src_node = self.get_node('atom', node_id(smiles, bond.GetBeginAtom().GetIdx()))
             tgt_node = self.get_node('atom', node_id(smiles, bond.GetEndAtom().GetIdx()))
-            bond_node = Node('bond', node_id(smiles, bond.GetIdx()), molecule_utils.bond_features(bond))
+            bond_node = Node('bond', node_id(smiles, bond.GetIdx()), bond_features(bond))
             bond_node.add_neighbors([src_node, tgt_node])
             src_node.add_neighbors([bond_node, tgt_node])
             tgt_node.add_neighbors([bond_node, src_node])
@@ -182,11 +182,3 @@ class Molecules(object):
             idx = int(node.split('/')[0])
             neighbor_idx[idx].append(node_idx[node])
         return neighbor_idx
-
-
-if __name__ == '__main__':
-    smiles = ['CCC1=C/C(=C/2\C=CNN2)/C(=O)C=C1OCCCCCC(C)(C)C3=NNN=N3',
-              'CCCCCC(=O)OC1=C(SC2=CC=CC=C2N3C1=CC=C3)C4=CC=CC=C4']
-    molecules = Molecules(smiles)
-    print(len(molecules.get_neighbor_idx_by_degree('atom', 3)))
-    print(molecules.get_neighbor_idx_by_batch('atom'))

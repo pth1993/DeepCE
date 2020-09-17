@@ -1,9 +1,9 @@
 import torch
 import torch.nn as nn
-from neural_fingerprint import NeuralFingerprint
-from drug_gene_attention import DrugGeneAttention
-from ltr_loss import point_wise_mse, list_wise_listnet, list_wise_listmle, pair_wise_ranknet, list_wise_rankcosine, \
-    list_wise_ndcg, combine_loss
+from .neural_fingerprint import NeuralFingerprint
+from .drug_gene_attention import DrugGeneAttention
+from .ltr_loss import point_wise_mse, list_wise_listnet, list_wise_listmle, pair_wise_ranknet, list_wise_rankcosine, \
+    list_wise_ndcg
 
 
 class DeepCE(nn.Module):
@@ -126,8 +126,6 @@ class DeepCE(nn.Module):
             loss = list_wise_rankcosine(label, predict)
         elif self.loss_type == 'list_wise_ndcg':
             loss = list_wise_ndcg(label, predict)
-        elif self.loss_type == 'combine':
-            loss = combine_loss(label, predict, self.device)
         else:
             raise ValueError('Unknown loss: %s' % self.loss_type)
         return loss

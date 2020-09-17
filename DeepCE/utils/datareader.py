@@ -1,7 +1,4 @@
-import numpy as np
-import random
-import torch
-import data_utils
+from .data_utils import *
 
 seed = 343
 np.random.seed(seed=seed)
@@ -13,14 +10,14 @@ class DataReader(object):
     def __init__(self, drug_file, gene_file, data_file_train, data_file_dev, data_file_test,
                  filter, device):
         self.device = device
-        self.drug, self.drug_dim = data_utils.read_drug_string(drug_file)
-        self.gene = data_utils.read_gene(gene_file, self.device)
-        feature_train, label_train = data_utils.read_data(data_file_train, filter)
-        feature_dev, label_dev = data_utils.read_data(data_file_dev, filter)
-        feature_test, label_test = data_utils.read_data(data_file_test, filter)
+        self.drug, self.drug_dim = read_drug_string(drug_file)
+        self.gene = read_gene(gene_file, self.device)
+        feature_train, label_train = read_data(data_file_train, filter)
+        feature_dev, label_dev = read_data(data_file_dev, filter)
+        feature_test, label_test = read_data(data_file_test, filter)
         self.train_feature, self.dev_feature, self.test_feature, self.train_label, \
         self.dev_label, self.test_label, self.use_pert_type, self.use_cell_id, self.use_pert_idose = \
-            data_utils.transfrom_to_tensor(feature_train, label_train, feature_dev, label_dev,
+            transfrom_to_tensor(feature_train, label_train, feature_dev, label_dev,
                                            feature_test, label_test, self.drug, self.device)
 
     def get_batch_data(self, dataset, batch_size, shuffle):
@@ -42,8 +39,8 @@ class DataReader(object):
             else:
                 excerpt = slice(start_idx, start_idx + batch_size)
             output = dict()
-            output['drug'] = data_utils.convert_smile_to_feature(feature['drug'][excerpt], self.device)
-            output['mask'] = data_utils.create_mask_feature(output['drug'], self.device)
+            output['drug'] = convert_smile_to_feature(feature['drug'][excerpt], self.device)
+            output['mask'] = create_mask_feature(output['drug'], self.device)
             if self.use_pert_type:
                 output['pert_type'] = feature['pert_type'][excerpt]
             if self.use_cell_id:
@@ -51,10 +48,3 @@ class DataReader(object):
             if self.use_pert_idose:
                 output['pert_idose'] = feature['pert_idose'][excerpt]
             yield output, label[excerpt]
-
-
-if __name__ == '__main__':
-    filter = {"time": "24H", "pert_id": ['BRD-U41416256', 'BRD-U60236422'], "pert_type": ["trt_cp"],
-              "cell_id": ["A375", "HT29", "MCF7", "PC3", "HA1E", "YAPC", "HELA"],
-              "pert_idose": ["0.04 um", "0.04 um", "0.12 um", "0.37 um", "1.11 um", "3.33 um", "10.0 um"]}
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
