@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 dir="../DeepCE/data"
 if [ ! -d "$dir" ]; then
-    mkdir "../DeepCE/data'"
+    mkdir "../DeepCE/data"
 fi
 file="../DeepCE/data/covid_data.zip"
 dir1="../DeepCE/data/covid_data"
