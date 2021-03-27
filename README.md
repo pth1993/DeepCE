@@ -3,6 +3,8 @@
 Code by **Thai-Hoang Pham** at Ohio State University.
 
 ## 1. Introduction
+This repository contains source code (**DeepCE**) and data for paper "[A deep learning framework for high-throughput mechanism-driven phenotype compound screening and its application to COVID-19 drug repurposing](https://www.nature.com/articles/s42256-020-00285-9)" (**Nature Machince Intelligence 3, 247–257 (2021)**)
+
 **DeepCE** is a Python implementation of the mechanism-driven neural network-based model which captures 
 high-dimensional associations among biological features as well as non-linear relationships between biological features 
 and outputs to predict gene expression profiles given a chemical compound.
@@ -98,7 +100,11 @@ Arguments in this scripts:
 * ``--num_cell``:        minimum number of cell lines that drugs appear on top ranked list
 * ``--top``:        size of top drugs in ranked list for each cell line
 
-## 6. Contact
+## 6. References
+
+[Pham, TH., Qiu, Y., Zeng, J. et al. A deep learning framework for high-throughput mechanism-driven phenotype compound screening and its application to COVID-19 drug repurposing. Nat Mach Intell 3, 247–257 (2021).](https://doi.org/10.1038/s42256-020-00285-9)
+
+## 7. Contact
 
 **Thai-Hoang Pham** < pham.375@osu.edu >
 
